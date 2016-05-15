@@ -7,6 +7,14 @@ var projectsRouter = module.exports = Router();
 
 projectsRouter.post('/projects', bodyParser, (req, res) => {
   var newProject = new Project(req.body);
+
+  if (req.body.categories) {
+      newProject.categories = [];
+      req.body.categories.split(',').forEach((ele) => {
+        newProject.categories.push(ele);
+      });
+    }
+
   newProject.save((err, data) => {
     if (err) return handleErr(err, res);
     res.status(200).json(data);
