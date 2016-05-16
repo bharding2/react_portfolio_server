@@ -28,24 +28,24 @@ projectsRouter.get('/projects', (req, res) => {
   });
 });
 
-projectsRouter.get('/projects/:name', (req, res) => {
-  Project.findOne({ _id: req.params.name }, (err, data) => {
+projectsRouter.get('/projects/:id', (req, res) => {
+  Project.findOne({ _id: req.params.id }, (err, data) => {
     if (err) return handleErr(err, res);
     res.status(200).json(data);
   });
 });
 
-projectsRouter.put('/projects/:name', bodyParser, (req, res) => {
+projectsRouter.put('/projects/:id', bodyParser, (req, res) => {
   var projectData = req.body;
   delete projectData._id;
-  Project.update({ name: req.params.name }, projectData, (err) => {
+  Project.update({ _id: req.params.id }, projectData, (err) => {
     if (err) return handleErr(err, res);
     res.status(200).json({ msg: 'project updated' });
   });
 });
 
-projectsRouter.delete('/projects/:name', (req, res) => {
-  Project.findOneAndRemove({ name: req.params.name }, (err) => {
+projectsRouter.delete('/projects/:id', (req, res) => {
+  Project.findOneAndRemove({ _id: req.params.id }, (err) => {
     if (err) return handleErr(err, res);
     res.status(200).json({ msg: 'project deleted' });
   });
